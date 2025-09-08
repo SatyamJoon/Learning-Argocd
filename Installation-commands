@@ -1,0 +1,25 @@
+#  Install-Agrocd
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+ 
+#  Agrocd-CLI
+brew install argocd
+
+# Login using the cli
+argocd admin initial-password -n argocd
+
+# Port-forwarding(optional)
+kubectl port-forward svc/argocd-server -n argocd 8080:443
+
+# Login using the cli
+argocd admin initial-password -n argocd
+
+# Using the username admin and the password from above, login to Argo CD's IP or hostname:
+argocd login <ARGOCD_SERVER>
+
+# Change the password using the command:
+argocd account update-password
+
+# Create an application from git repo
+# Creating apps through cli
+kubectl config set-context --current --namespace=argocd
